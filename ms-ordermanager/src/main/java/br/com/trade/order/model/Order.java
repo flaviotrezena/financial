@@ -16,9 +16,27 @@ public class Order {
 
 	@NotNull
 	private double quantity; 
-		
+
+	@NotNull
+	private double pu; 
+
+	public double getPu() {
+		return pu;
+	}
+
+	public void setPu(double pu) {
+		this.pu = pu;
+	}
+
 	@NotBlank
 	private String side; //BUY SELL
+
+	public Order(String ticker, double price, int quantity, String side) {
+		this.ticket = ticker;
+		this.price = price;
+		this.quantity = quantity;
+		this.side = side;
+	}
 
 	public String getTicket() {
 		return ticket;
