@@ -88,7 +88,7 @@ public class Engine {
 			//remove Orders processed
 			log.info("Removing Buyer order processed ? " + bookOfOrders.remove(buyOrder));
 			log.info("Removing Seller order processed ? " + bookOfOrders.remove(sellOrder));
-
+			
 			/*Iterator<Order> iterator = bookOfOrders.iterator();
 	        while (iterator.hasNext()) {
 	            Order order = iterator.next();

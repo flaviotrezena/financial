@@ -24,7 +24,7 @@ class EngineTest {
 			engine.process(newOrder);
 		}
 		
-		assertTrue(engine.getTotalOrders() == newTwoOrders.size());
+		assertTrue(engine.getTotalTrades() == 2);
 	}
 
 	
@@ -72,9 +72,18 @@ class EngineTest {
 		mockOrder3.setTicket("ALGA12");
 		mockOrder3.setSide("SELL");
 
+		Order mockOrder4 = new Order();
+		mockOrder4.setQuantity(5);
+		mockOrder4.setPu(34.0);
+		mockOrder4.setClOrdId("987_654");
+		mockOrder4.setTicket("BNDP12");
+		mockOrder4.setOwner("TREZENABANK");
+		mockOrder4.setSide("BUY");
+
 		mockOrder.add(mockOrder1);
 		mockOrder.add(mockOrder2);
 		mockOrder.add(mockOrder3);
+		mockOrder.add(mockOrder4);
 		
 		return mockOrder;
 	}
