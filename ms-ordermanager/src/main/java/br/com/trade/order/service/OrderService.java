@@ -27,7 +27,7 @@ public class OrderService {
 	private static final String TOPIC = "order";
 	
 	public Order getOrder(Long orderId) {
-		return new Order("ALGA12", 1.0, 10000, "BUYER");
+		return new Order("ALGA12", 1.0, 10000, "BUYER", "12313213312_13123");
 	}
 
 	public Double calculate(double quantity, double price) {

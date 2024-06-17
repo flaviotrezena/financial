@@ -1,3 +1,9 @@
 digraph G {
-  Web -> ordermanager;
+  Front -> ordermanager;
+  ordermanager -> calculadora [label="calcular PU"];
+  calculadora -> ordermanager [label="PU"];
+  ordermanager -> "ORDER.IN" [label="add topic"];
+  matchingengine -> "ORDER.IN";
+  matchingengine -> "TRADE.OUT";
+  marketdata -> "TRADE.OUT";
 }

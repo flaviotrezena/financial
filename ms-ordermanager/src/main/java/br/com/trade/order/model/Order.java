@@ -12,6 +12,17 @@ public class Order {
 	private String ticket;
 	
 	@NotNull
+	private String clOrderId;
+
+	public String getClOrderId() {
+		return clOrderId;
+	}
+
+	public void setClOrderId(String clOrderId) {
+		this.clOrderId = clOrderId;
+	}
+
+	@NotNull
 	private double price;
 
 	@NotNull
@@ -31,11 +42,12 @@ public class Order {
 	@NotBlank
 	private String side; //BUY SELL
 
-	public Order(String ticker, double price, int quantity, String side) {
+	public Order(String ticker, double price, int quantity, String side, String clOrderId) {
 		this.ticket = ticker;
 		this.price = price;
 		this.quantity = quantity;
 		this.side = side;
+		this.clOrderId = clOrderId;
 	}
 
 	public String getTicket() {
