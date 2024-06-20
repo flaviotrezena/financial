@@ -24,10 +24,10 @@ public class OrderService {
 	@Autowired
 	private KafkaTemplate<String, Object> kafkaTemplate;
 
-	private static final String TOPIC = "order";
+	private static final String TOPIC = "ORDER.IN";
 	
 	public Order getOrder(Long orderId) {
-		return new Order("ALGA12", 1.0, 10000, "BUYER", "12313213312_13123");
+		return new Order("ALGA12", 1.0, 10000, "BUY", "12313213312_13123");
 	}
 
 	public Double calculate(double quantity, double price) {

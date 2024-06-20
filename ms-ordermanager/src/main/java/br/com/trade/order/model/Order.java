@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public class Order {
 	
+	
 	@NotBlank(message = "ticket is mandatory")
     @Size(min = 2, message = "ticket should have at least 2 characters")
 	private String ticket;
@@ -81,6 +82,4 @@ public class Order {
 	public void setSide(String side) {
 		this.side = side;
 	}
-	
-	
 }
