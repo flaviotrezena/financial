@@ -1,5 +1,7 @@
 package br.com.trade.order.model;
 
+import java.time.LocalTime;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -27,10 +29,20 @@ public class Order {
 	private double price;
 
 	@NotNull
-	private double quantity; 
+	private int quantity; 
 
 	@NotNull
 	private double pu; 
+
+	private LocalTime transactTime;
+	
+	public LocalTime getTransactTime() {
+		return transactTime;
+	}
+
+	public void setTransactTime(LocalTime transactTime) {
+		this.transactTime = transactTime;
+	}
 
 	public double getPu() {
 		return pu;
@@ -43,12 +55,13 @@ public class Order {
 	@NotBlank
 	private String side; //BUY SELL
 
-	public Order(String ticker, double price, int quantity, String side, String clOrderId) {
+	public Order(String ticker, double price, int quantity, String side, String clOrderId, LocalTime transactTime) {
 		this.ticket = ticker;
 		this.price = price;
 		this.quantity = quantity;
 		this.side = side;
 		this.clOrderId = clOrderId;
+		this.transactTime = transactTime;
 	}
 
 	public String getTicket() {
@@ -71,7 +84,7 @@ public class Order {
 		return quantity;
 	}
 
-	public void setQuantity(double quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 

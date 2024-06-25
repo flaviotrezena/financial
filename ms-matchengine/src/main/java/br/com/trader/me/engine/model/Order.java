@@ -1,15 +1,25 @@
 package br.com.trader.me.engine.model;
 
+import java.time.LocalTime;
+
 public class Order implements Comparable<Order> {
 
 	private String clOrdId;
 	private String ticket;
 	private double price;
-	private double quantity; 
+	private int quantity; 
 	private double pu; 
 	private String owner;
-
+	private LocalTime transactTime;
 	
+	public LocalTime getTransactTime() {
+		return transactTime;
+	}
+
+	public void setTransactTime(LocalTime transactTime) {
+		this.transactTime = transactTime;
+	}
+
 	public String getOwner() {
 		return owner;
 	}
@@ -22,11 +32,11 @@ public class Order implements Comparable<Order> {
 		this.clOrdId = clOrdId;
 	}
 
-	public double getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(double quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 

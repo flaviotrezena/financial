@@ -6,5 +6,5 @@ digraph G {
   matchingengine -> "ORDER.IN";
   matchingengine -> "TRADE.OUT";
   dropcopy -> "TRADE.OUT";
-  dropcopy -> "FIX.out";
+  dropcopy -> "FIX";
 }

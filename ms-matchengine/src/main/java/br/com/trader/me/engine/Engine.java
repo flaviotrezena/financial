@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import br.com.trader.me.engine.model.Order;
@@ -74,11 +75,20 @@ public class Engine {
 			Order sellOrder = (Order) matchOrders.stream().filter(sello -> "SELL".equals(sello.getSide())).findFirst().get();
 			Order buyOrder = (Order) matchOrders.stream().filter(buyo -> "BUY".equals(buyo.getSide())).findFirst().get();
 			
+			
 			newTrade.setTakerOrderId(buyOrder.getOwner());
 			newTrade.setMakerOrderId(sellOrder.getOwner());
 			newTrade.setAmount(sellOrder.getPu());
 			newTrade.setPrice(sellOrder.getPrice());
 			newTrade.setTransactTime(LocalDateTime.now());
+			newTrade.setQuantity(buyOrder.getQuantity());
+			newTrade.setId(getTotalOrders());
+			if (buyOrder.getTransactTime().isBefore(sellOrder.getTransactTime())) {
+				newTrade.setSide("BUY");
+			}else {
+				newTrade.setSide("SELL");
+			}
+			newTrade.setId(new Random().nextLong());
 
 			log.info("Generating a Trade for " + buyOrder.getOwner() + " x " + sellOrder.getOwner());
 

@@ -1,4 +1,4 @@
-package br.com.trader.me.engine.model;
+package br.com.trader.dropcopy.model;
 
 import java.time.LocalDateTime;
 
@@ -10,8 +10,14 @@ public class Trade {
 
 	private String makerOrderId;
 
+	/**
+	 * Trade amount.
+	 */
 	private double amount;
 
+	/**
+	 * Trade price.
+	 */
 	private double price;
 
 	private int quantity;
@@ -62,8 +68,7 @@ public class Trade {
 	 * @param pAmount
 	 * @param pPrice
 	 */
-	public Trade(long id, final String pTakerOrderId, final String pMakerOrderId, final double pAmount,
-			final double pPrice, int quantity, String side, String ticker) {
+	public Trade(long id, final String pTakerOrderId, final String pMakerOrderId, final double pAmount, final double pPrice, int quantity, String side, String ticker) {
 		super();
 		this.id = id;
 		this.takerOrderId = pTakerOrderId;
@@ -72,7 +77,7 @@ public class Trade {
 		this.price = pPrice;
 		this.quantity = quantity;
 		this.side = side;
-		this.ticker = ticker;
+		this.ticker= ticker;
 	}
 
 	public Trade() {
@@ -142,5 +147,7 @@ public class Trade {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	
 
 }
