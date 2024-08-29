@@ -3,6 +3,9 @@ package br.com.trader.me.engine.model;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import lombok.Data;
+
+@Data
 public class Order implements Comparable<Order> {
 
 	private String clOrdId;

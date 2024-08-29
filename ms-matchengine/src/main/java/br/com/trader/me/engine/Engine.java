@@ -12,20 +12,26 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
+import org.springframework.stereotype.Component;
 
 import br.com.trader.me.engine.model.Order;
 import br.com.trader.me.engine.model.Security;
 import br.com.trader.me.engine.model.Trade;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class Engine {
-
-	@Autowired
-	private KafkaTemplate<String, Object> kafkaTemplate;
 
 	static final String TRADE_OUT_TOPIC = "trade.out";
 
+    //@Autowired
+    //private TradeProducer tradeProducer; 
+
+	@Autowired
+	private KafkaTemplate<String, Trade> kafkaTemplate;
+	
 	String type;
 
 	List<Security> listOfSecurities = new ArrayList<>();
@@ -34,6 +40,7 @@ public class Engine {
 
 	LinkedList<Trade> bookOfTrades = new LinkedList<>();
 
+	@PostConstruct
 	public boolean start() {
 		try {
 			// Load securities at the start of the engine TODO refactor this part
@@ -56,6 +63,10 @@ public class Engine {
 		this.type = typeEngine;
 	}
 
+	public Engine() {
+		this.type = "CORP";
+	}
+
 	public void process(Order order) {
 		bookOfOrders.add(order);
 		process(bookOfOrders);
@@ -76,12 +87,12 @@ public class Engine {
                                .count() > 0)
         .collect(Collectors.toCollection(LinkedList::new));
 		
-		//found matches! Let's trade!
+		//matches! Let's trade!
 		if (!matchOrders.isEmpty()) {
 			Trade newTrade = new Trade();
+			
 			Order sellOrder = (Order) matchOrders.stream().filter(sello -> "SELL".equals(sello.getSide())).findFirst().get();
 			Order buyOrder = (Order) matchOrders.stream().filter(buyo -> "BUY".equals(buyo.getSide())).findFirst().get();
-			
 			
 			newTrade.setTakerOrderId(buyOrder.getOwner());
 			newTrade.setMakerOrderId(sellOrder.getOwner());
@@ -90,11 +101,12 @@ public class Engine {
 			newTrade.setTransactTime(LocalDateTime.now());
 			newTrade.setQuantity(buyOrder.getQuantity());
 			newTrade.setId(getTotalOrders());
-			if (buyOrder.getTransactTime().isBefore(sellOrder.getTransactTime())) {
-				newTrade.setSide("BUY");
-			}else {
-				newTrade.setSide("SELL");
-			}
+			newTrade.setSide("BUY"); //TODO corrigir tratamento para decisao de BUY/SELL
+			//if (buyOrder.getProcessedByMatchEngine().isBefore(sellOrder.getProcessedByMatchEngine())) {
+			//newTrade.setSide("BUY");
+			//}else {
+			//	newTrade.setSide("SELL");
+			//}
 			newTrade.setId(new Random().nextLong());
 
 			log.info("Generating a Trade for " + buyOrder.getOwner() + " x " + sellOrder.getOwner());
@@ -102,7 +114,10 @@ public class Engine {
 			//storing new Trade
 			bookOfTrades.add(newTrade);
 			
+			
 			sendTrade(newTrade);
+			log.info("Sending trade to blotter.");
+			//tradeProducer.sendMessage(newTrade);
 			
 			//remove Orders processed
 			log.info("Removing Buyer order processed ? " + bookOfOrders.remove(buyOrder));
@@ -124,17 +139,16 @@ public class Engine {
 		}
 	}
 
-
 	public boolean sendTrade(Trade newTrade) {
 		try {
 			
-            CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(TRADE_OUT_TOPIC, newTrade);
+            CompletableFuture<SendResult<String, Trade>> future = kafkaTemplate.send(TRADE_OUT_TOPIC, newTrade);
 
             future.whenComplete((result, ex) -> {
                 if (ex == null) {
-                    log.info("Trade sent to Kafka: "+ newTrade);
+                    log.info("Trade sent to Blotter: {} ", newTrade);
                 } else {
-                    log.error("Error sending newOrder to Kafka: " + ex.getMessage());
+                    log.error("Error sending Trade to Blotter: {} ", newTrade, ex);
                 }
             });
 
@@ -142,19 +156,18 @@ public class Engine {
             future.get();
             return future.isDone() && !future.isCompletedExceptionally();
         } catch (Exception e) {
-            log.error("Error sending Order to Kafka: {}", e.getMessage());
+            log.error("Error sending Trade to Kafka: {}", e.getMessage());
             return false;
         }
 	}
-
 	
 	private LinkedList<Order> getListOfOrdersByTicker(String ticker) {
-		log.info("Getting orders for Ticker " + ticker);
+		log.info("Getting orders for Ticker {} ", ticker);
 		
 		LinkedList<Order> result = bookOfOrders.stream().filter(order -> order.getTicker().equals(ticker))
 				.collect(Collectors.toCollection(LinkedList::new));
 		
-		log.info("Got " + result.size() + " orders.");
+		log.info("Got {} orders.", result.size());
 		
 		return result;
 	}

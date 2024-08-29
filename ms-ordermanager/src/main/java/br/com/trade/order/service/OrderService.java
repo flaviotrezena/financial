@@ -28,9 +28,10 @@ public class OrderService {
 	private static final String TOPIC = "order.in";
 	
 	public Order getOrder(Long orderId) {
-		return new Order("ALGA12", 1.0, 10000, "BUY", "12313213312_13123", LocalTime.now());
+		return new Order("ALGA12", 1.0, 10000, "BUY", "12313213312_13123", LocalTime.now(), "Bradesco");
 	}
 
+	
 	public Double calculate(double quantity, double price) {
 		return calculadoraClient.calculatePu(quantity, price).getBody();
 	}
@@ -49,7 +50,7 @@ public class OrderService {
         orderCopy.setPu(order.getPu());
         orderCopy.setTransactTime(order.getTransactTime());
         orderCopy.setSide(order.getSide());
-
+        orderCopy.setOwner(order.getOwner());
         return orderCopy;
     }
 	

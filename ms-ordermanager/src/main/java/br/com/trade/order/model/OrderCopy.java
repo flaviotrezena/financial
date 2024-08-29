@@ -27,41 +27,22 @@ public class OrderCopy extends Order {
 	@JsonProperty("transactTime")
 	private LocalTime transactTime;
 
-	public String getClOrdId() {
-		return clOrdId;
-	}
-
-	public void setClOrdId(String clOrdId) {
-		this.clOrdId = clOrdId;
-	}
-
-	public LocalTime getTransactTime() {
-		return transactTime;
-	}
-
-	public void setTransactTime(LocalTime transactTime) {
-		this.transactTime = transactTime;
-	}
-
-	public double getPu() {
-		return pu;
-	}
-
-	public void setPu(double pu) {
-		this.pu = pu;
-	}
+	@JsonProperty("owner")
+	private String owner;
+	
 
 	@NotBlank
 	private String side; //BUY SELL
 
-	public OrderCopy(String ticker, double price, int quantity, String side, String clOrderId, LocalTime transactTime) {
-		super(ticker,price,quantity,side,clOrderId, transactTime);
+	public OrderCopy(String ticker, double price, int quantity, String side, String clOrderId, LocalTime transactTime, String owner) {
+		super(ticker,price,quantity,side,clOrderId, transactTime, owner);
 		this.ticker = ticker;
 		this.price = price;
 		this.quantity = quantity;
 		this.side = side;
 		this.clOrdId = clOrderId;
 		this.transactTime = transactTime;
+		this.owner = owner;
 	}
 
 	public OrderCopy() {
@@ -99,4 +80,37 @@ public class OrderCopy extends Order {
 	public void setSide(String side) {
 		this.side = side;
 	}
+	
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getClOrdId() {
+		return clOrdId;
+	}
+
+	public void setClOrdId(String clOrdId) {
+		this.clOrdId = clOrdId;
+	}
+
+	public LocalTime getTransactTime() {
+		return transactTime;
+	}
+
+	public void setTransactTime(LocalTime transactTime) {
+		this.transactTime = transactTime;
+	}
+
+	public double getPu() {
+		return pu;
+	}
+
+	public void setPu(double pu) {
+		this.pu = pu;
+	}
+	
 }

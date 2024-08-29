@@ -21,13 +21,8 @@ public class Order {
 	@NotNull
 	private String clOrdId;
 
-	public String getClOrdId() {
-		return clOrdId;
-	}
-
-	public void setClOrdId(String clOrderId) {
-		this.clOrdId = clOrderId;
-	}
+	@NotNull
+	private String owner;
 
 	@NotNull
 	private double price;
@@ -39,7 +34,18 @@ public class Order {
 	private double pu; 
 
 	private LocalTime transactTime;
-	
+
+	@NotBlank
+	private String side; //BUY SELL
+
+	public String getClOrdId() {
+		return clOrdId;
+	}
+
+	public void setClOrdId(String clOrderId) {
+		this.clOrdId = clOrderId;
+	}
+
 	public LocalTime getTransactTime() {
 		return transactTime;
 	}
@@ -56,16 +62,14 @@ public class Order {
 		this.pu = pu;
 	}
 
-	@NotBlank
-	private String side; //BUY SELL
-
-	public Order(String ticker, double price, int quantity, String side, String clOrderId, LocalTime transactTime) {
+	public Order(String ticker, double price, int quantity, String side, String clOrderId, LocalTime transactTime, String owner) {
 		this.ticker = ticker;
 		this.price = price;
 		this.quantity = quantity;
 		this.side = side;
 		this.clOrdId = clOrderId;
 		this.transactTime = transactTime;
+		this.owner = owner;
 	}
 
 	public String getTicker() {
@@ -98,5 +102,13 @@ public class Order {
 
 	public void setSide(String side) {
 		this.side = side;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 }

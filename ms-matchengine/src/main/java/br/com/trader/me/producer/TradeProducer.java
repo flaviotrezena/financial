@@ -8,13 +8,20 @@ import br.com.trader.me.engine.model.Trade;
 @Service
 public class TradeProducer {
 
-	 private static final String TOPIC = "trade.out";
+	private static final String TOPIC = "trade.out";
 
-	    @Autowired
-	    private KafkaTemplate<String, Trade> kafkaTemplate;
+	@Autowired
+	private KafkaTemplate<String, Trade> kafkaTemplate;
 
-	    public void sendMessage(Trade trade) {
-	        kafkaTemplate.send(TOPIC, trade);
-	    }
-	    
+	public TradeProducer() {
+	}
+	
+	public TradeProducer(KafkaTemplate<String, Trade> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
+	
+	public void sendMessage(Trade trade) {
+		kafkaTemplate.send(TOPIC, trade);
+	}
+
 }
