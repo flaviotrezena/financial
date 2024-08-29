@@ -1,16 +1,27 @@
 package br.com.trader.me.engine.model;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Order implements Comparable<Order> {
 
 	private String clOrdId;
-	private String ticket;
+	private String ticker;
 	private double price;
 	private int quantity; 
 	private double pu; 
 	private String owner;
+	private String side; //BUY SELL	
 	private LocalTime transactTime;
+	private LocalDateTime processedByMatchEngine;
+
+	public LocalDateTime getProcessedByMatchEngine() {
+		return processedByMatchEngine;
+	}
+
+	public void setProcessedByMatchEngine(LocalDateTime processedByMatchEngine) {
+		this.processedByMatchEngine = processedByMatchEngine;
+	}
 	
 	public LocalTime getTransactTime() {
 		return transactTime;
@@ -64,13 +75,10 @@ public class Order implements Comparable<Order> {
 	public void setOwner(String owner) {
 		this.owner = owner;
 	}
-	
-
-	private String side; //BUY SELL
 
 	public Order(String clOrdId, String ticker, double price, int quantity, String side, String owner) {
 		this.clOrdId = clOrdId;
-		this.ticket = ticker;
+		this.ticker = ticker;
 		this.price = price;
 		this.quantity = quantity;
 		this.side = side;
@@ -81,12 +89,12 @@ public class Order implements Comparable<Order> {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getTicket() {
-		return ticket;
+	public String getTicker() {
+		return ticker;
 	}
 
-	public void setTicket(String ticket) {
-		this.ticket = ticket;
+	public void setTicker(String ticker) {
+		this.ticker = ticker;
 	}
 
 	public double getPrice() {

@@ -19,7 +19,7 @@ public class ValidatorData {
 			isValid = false;
 		}
 
-		if (newOrder.getTicket() == null || newOrder.getTicket().length()==0) {
+		if (newOrder.getTicker() == null || newOrder.getTicker().length()==0) {
 			isValid = false;
 		}
 		

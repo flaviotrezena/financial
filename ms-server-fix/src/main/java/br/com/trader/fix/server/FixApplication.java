@@ -1,13 +1,14 @@
 package br.com.trader.fix.server;
 
-import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import br.com.trade.fix.models.Order;
 import quickfix.Application;
 import quickfix.FieldNotFound;
 import quickfix.IncorrectTagValue;
@@ -37,7 +38,13 @@ import quickfix.fix44.OrderCancelReplaceRequest;
 @Component
 public class FixApplication extends MessageCracker implements Application {
 
+	private final KafkaTemplate<String, Order> kafkaTemplate;
+	 
 	private ConcurrentHashMap<String, LinkedList<Order>> orderBook = new ConcurrentHashMap<>();
+	
+	 public FixApplication(KafkaTemplate<String, Order> kafkaTemplate) {
+	        this.kafkaTemplate = kafkaTemplate;
+	 }
 	
 	public void add(String ticker, Order order) {
         orderBook.compute(ticker, (key, orders) -> {
@@ -167,10 +174,13 @@ public class FixApplication extends MessageCracker implements Application {
 		
         // Send ExecutionReport
         try {
-            Session.sendToTarget(execReport, sessionID);
+            Session.sendToTarget(execReport, sessionID);            
+            
+            kafkaTemplate.send("internal.order.in", updateOrder);
+            
         } catch (SessionNotFound e) {
             e.printStackTrace();
-        }
+		}
     }
     
     
@@ -207,9 +217,12 @@ public class FixApplication extends MessageCracker implements Application {
         // Send ExecutionReport
         try {
             Session.sendToTarget(execReport, sessionID);
+            
+            kafkaTemplate.send("internal.order.in", newOrder);
+            
         } catch (SessionNotFound e) {
             e.printStackTrace();
-        }
+		}
     }
 
 	private String generateOrderId() {
@@ -224,7 +237,7 @@ public class FixApplication extends MessageCracker implements Application {
         orderBook.forEach((ticker, orders) -> {
             System.out.println("Ticker: " + ticker);
             for (Order order : orders) {
-                System.out.println("    OrderId: " + order.getOrderId() + ", Quantity: " + order.getQuantity() + ", Price: " + order.getPrice());
+                System.out.println("    OrderId: " + order.getOrderId() + ", Side: " + (order.getSide() == 1 ? "Compra":"Venda") + ", Quantity: " + order.getQuantity() + ", Price: " + order.getPrice());
             }
         });
     }
@@ -255,82 +268,4 @@ public class FixApplication extends MessageCracker implements Application {
         }
         return false; // Order not found
     }
-    
-    
-    class Order {
-    	
-    	private String orderId;
-    	private String ticker;
-    	private String clOrderId;
-    	private double price;
-    	private int quantity; 
-    	private double pu; 
-    	private int side;
-    	private LocalTime transactTime;
-		
-    	public Order(String orderId, ClOrdID clOrdID, Symbol symbol, Side side, OrderQty orderQty, Price price2) {
-			this.orderId = orderId;
-    		this.clOrderId = clOrdID.getValue();
-			this.ticker = String.valueOf(symbol);
-			this.side = Integer.valueOf(side.getValue());
-			this.quantity = Double.valueOf(orderQty.getValue()).intValue();
-			this.price = price2.getValue();
-			this.pu = (this.price * this.quantity);
-			this.transactTime = LocalTime.now();
-		}    	
-    	
-		public int getSide() {
-			return side;
-		}
-
-		public void setSide(int side) {
-			this.side = side;
-		}
-
-		public String getOrderId() {
-			return orderId;
-		}
-		public void setOrderId(String orderId) {
-			this.orderId = orderId;
-		}
-		public String getTicker() {
-			return ticker;
-		}
-		public void setTicker(String ticket) {
-			this.ticker = ticket;
-		}
-		public String getClOrderId() {
-			return clOrderId;
-		}
-		public void setClOrderId(String clOrderId) {
-			this.clOrderId = clOrderId;
-		}
-		public double getPrice() {
-			return price;
-		}
-		public void setPrice(double price) {
-			this.price = price;
-		}
-		public int getQuantity() {
-			return quantity;
-		}
-		public void setQuantity(int quantity) {
-			this.quantity = quantity;
-		}
-		public double getPu() {
-			return pu;
-		}
-		public void setPu(double pu) {
-			this.pu = pu;
-		}
-		public LocalTime getTransactTime() {
-			return transactTime;
-		}
-		public void setTransactTime(LocalTime transactTime) {
-			this.transactTime = transactTime;
-		}
-    	
-    	
-    }
-    
 }

@@ -105,3 +105,94 @@
 20240627-00:37:49: Sent test request TEST
 20240627-00:38:40: Sent test request TEST
 20240627-00:39:06: Disconnecting: Socket exception (/127.0.0.1:64813): java.net.SocketException: Connection reset
+20240827-01:04:03: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:04:03: Session state is not current; resetting FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:04:03: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:10:07: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:10:07: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:14:20: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:14:20: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:19:49: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:19:49: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:22:07: Accepting session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL from /127.0.0.1:59428
+20240827-01:22:07: Acceptor heartbeat set to 30 seconds
+20240827-01:22:07: Logon contains ResetSeqNumFlag=Y, resetting sequence numbers to 1
+20240827-01:22:07: Received logon
+20240827-01:22:07: Responding to Logon request
+20240827-01:23:39: Initiated logout request
+20240827-01:23:39: Received logout response
+20240827-01:23:39: Disconnecting: Received logout response
+20240827-01:27:27: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:27:27: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:28:40: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:28:40: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:29:43: Accepting session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL from /127.0.0.1:59655
+20240827-01:29:43: Acceptor heartbeat set to 30 seconds
+20240827-01:29:43: Logon contains ResetSeqNumFlag=Y, resetting sequence numbers to 1
+20240827-01:29:44: Received logon
+20240827-01:29:44: Responding to Logon request
+20240827-01:32:31: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:32:31: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:32:53: Accepting session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL from /127.0.0.1:59755
+20240827-01:32:53: Acceptor heartbeat set to 30 seconds
+20240827-01:32:53: Logon contains ResetSeqNumFlag=Y, resetting sequence numbers to 1
+20240827-01:32:53: Received logon
+20240827-01:32:53: Responding to Logon request
+20240827-01:35:55: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:35:55: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:36:21: Accepting session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL from /127.0.0.1:59823
+20240827-01:36:21: Acceptor heartbeat set to 30 seconds
+20240827-01:36:21: Logon contains ResetSeqNumFlag=Y, resetting sequence numbers to 1
+20240827-01:36:21: Received logon
+20240827-01:36:21: Responding to Logon request
+20240827-01:40:31: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:40:31: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:40:59: Accepting session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL from /127.0.0.1:59969
+20240827-01:40:59: Acceptor heartbeat set to 30 seconds
+20240827-01:40:59: Logon contains ResetSeqNumFlag=Y, resetting sequence numbers to 1
+20240827-01:40:59: Received logon
+20240827-01:40:59: Responding to Logon request
+20240827-01:41:52: Sent test request TEST
+20240827-01:47:58: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:47:58: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:48:12: Accepting session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL from /127.0.0.1:60624
+20240827-01:48:12: Acceptor heartbeat set to 30 seconds
+20240827-01:48:12: Logon contains ResetSeqNumFlag=Y, resetting sequence numbers to 1
+20240827-01:48:12: Received logon
+20240827-01:48:12: Responding to Logon request
+20240827-01:49:02: Sent test request TEST
+20240827-01:49:57: Initiated logout request
+20240827-01:49:57: Received logout response
+20240827-01:49:57: Disconnecting: Received logout response
+20240827-01:56:30: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-01:56:30: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-01:57:34: Accepting session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL from /127.0.0.1:61034
+20240827-01:57:34: Acceptor heartbeat set to 30 seconds
+20240827-01:57:34: Logon contains ResetSeqNumFlag=Y, resetting sequence numbers to 1
+20240827-01:57:34: Received logon
+20240827-01:57:34: Responding to Logon request
+20240827-01:58:31: Sent test request TEST
+20240827-02:10:36: Initiated logout request
+20240827-02:10:36: Received logout response
+20240827-02:10:36: Disconnecting: Received logout response
+20240827-02:10:49: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-02:10:49: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-02:11:10: Accepting session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL from /127.0.0.1:62166
+20240827-02:11:10: Acceptor heartbeat set to 30 seconds
+20240827-02:11:10: Logon contains ResetSeqNumFlag=Y, resetting sequence numbers to 1
+20240827-02:11:10: Received logon
+20240827-02:11:10: Responding to Logon request
+20240827-02:12:03: Sent test request TEST
+20240827-02:20:04: Initiated logout request
+20240827-02:20:04: Received logout response
+20240827-02:20:04: Disconnecting: Received logout response
+20240827-02:20:26: Session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL schedule is daily, 00:00:00-UTC - 23:59:59-UTC
+20240827-02:20:26: Created session: FIX.4.4:FIX_SERVER->CLIENTE_EXCEL
+20240827-02:20:38: Accepting session FIX.4.4:FIX_SERVER->CLIENTE_EXCEL from /127.0.0.1:64412
+20240827-02:20:38: Acceptor heartbeat set to 30 seconds
+20240827-02:20:38: Logon contains ResetSeqNumFlag=Y, resetting sequence numbers to 1
+20240827-02:20:38: Received logon
+20240827-02:20:38: Responding to Logon request
+20240827-02:20:57: Initiated logout request
+20240827-02:20:57: Received logout response
+20240827-02:20:57: Disconnecting: Received logout response

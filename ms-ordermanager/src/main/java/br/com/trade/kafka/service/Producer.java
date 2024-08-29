@@ -9,7 +9,7 @@ import br.com.trade.order.model.Order;
 @Service
 public class Producer {
 
-	private static final String TOPIC = "ORDER.IN";
+	private static final String TOPIC = "order.in";
 
 	@Autowired
 	private KafkaTemplate<String, Object> kafkaTemplate;

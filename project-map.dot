@@ -1,10 +1,16 @@
 digraph G {
-  Front -> ordermanager;
+  API_ADMIN -> ordermanager;
+  client_fix -> server_fix;
+  server_fix -> "INTERNAL.ORDER.IN"[label="FIX msg"];
   ordermanager -> calculadora [label="calcular PU"];
-  calculadora -> ordermanager [label="PU"];
+  "INTERNAL.ORDER.IN" -> ordermanager;
   ordermanager -> "ORDER.IN" [label="add topic"];
+  calculadora -> ordermanager [label="PU"];
   matchingengine -> "ORDER.IN";
   matchingengine -> "TRADE.OUT";
   dropcopy -> "TRADE.OUT";
   dropcopy -> "FIX";
+  securities -> "ANBIMA.app-myfinan-instruments" [label="get securities data"];
+  securities -> CACHE_SECURITIE;
+  matchingengine -> CACHE_SECURITIE;
 }

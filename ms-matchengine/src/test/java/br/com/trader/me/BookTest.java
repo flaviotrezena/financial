@@ -54,12 +54,12 @@ class BookTest {
 		Order mockOrder1 = new Order();
 		mockOrder1.setPu(2.0);
 		mockOrder1.setOwner("XPCOR");
-		mockOrder1.setTicket("ALGA12");
+		mockOrder1.setTicker("ALGA12");
 
 		Order mockOrder2 = new Order();
 		mockOrder2.setPu(34.0);
 		mockOrder1.setOwner("BRADESCOCOR");
-		mockOrder2.setTicket("BNDP12");
+		mockOrder2.setTicker("BNDP12");
 
 		mockOrder.add(mockOrder1);
 		mockOrder.add(mockOrder2);

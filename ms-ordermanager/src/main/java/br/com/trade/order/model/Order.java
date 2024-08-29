@@ -10,19 +10,23 @@ import jakarta.validation.constraints.Size;
 public class Order {
 	
 	
-	@NotBlank(message = "ticket is mandatory")
-    @Size(min = 2, message = "ticket should have at least 2 characters")
-	private String ticket;
-	
-	@NotNull
-	private String clOrderId;
-
-	public String getClOrderId() {
-		return clOrderId;
+	public Order() {
+		super();
 	}
 
-	public void setClOrderId(String clOrderId) {
-		this.clOrderId = clOrderId;
+	@NotBlank(message = "ticker is mandatory")
+    @Size(min = 2, message = "ticker should have at least 2 characters")
+	private String ticker;
+	
+	@NotNull
+	private String clOrdId;
+
+	public String getClOrdId() {
+		return clOrdId;
+	}
+
+	public void setClOrdId(String clOrderId) {
+		this.clOrdId = clOrderId;
 	}
 
 	@NotNull
@@ -56,20 +60,20 @@ public class Order {
 	private String side; //BUY SELL
 
 	public Order(String ticker, double price, int quantity, String side, String clOrderId, LocalTime transactTime) {
-		this.ticket = ticker;
+		this.ticker = ticker;
 		this.price = price;
 		this.quantity = quantity;
 		this.side = side;
-		this.clOrderId = clOrderId;
+		this.clOrdId = clOrderId;
 		this.transactTime = transactTime;
 	}
 
-	public String getTicket() {
-		return ticket;
+	public String getTicker() {
+		return ticker;
 	}
 
-	public void setTicket(String ticket) {
-		this.ticket = ticket;
+	public void setTicker(String ticker) {
+		this.ticker = ticker;
 	}
 
 	public double getPrice() {

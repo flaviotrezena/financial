@@ -53,6 +53,8 @@ public class Trade {
 	public void setTransactTime(LocalDateTime transactTime) {
 		this.transactTime = transactTime;
 	}
+	
+	
 
 	/**
 	 * Create an instance of Trade.

@@ -53,14 +53,14 @@ class EngineTest {
 		mockOrder1.setQuantity(1000);
 		mockOrder1.setOwner("XPCOR");
 		mockOrder1.setClOrdId("123_456");
-		mockOrder1.setTicket("ALGA12");
+		mockOrder1.setTicker("ALGA12");
 		mockOrder1.setSide("BUY");
 
 		Order mockOrder2 = new Order();
 		mockOrder2.setQuantity(5);
 		mockOrder2.setPu(34.0);
 		mockOrder2.setClOrdId("987_654");
-		mockOrder2.setTicket("BNDP12");
+		mockOrder2.setTicker("BNDP12");
 		mockOrder2.setOwner("AGORACOR");
 		mockOrder2.setSide("SELL");
 
@@ -69,14 +69,14 @@ class EngineTest {
 		mockOrder3.setPu(2000.0);
 		mockOrder3.setOwner("BRADESCO");
 		mockOrder3.setClOrdId("456_789");
-		mockOrder3.setTicket("ALGA12");
+		mockOrder3.setTicker("ALGA12");
 		mockOrder3.setSide("SELL");
 
 		Order mockOrder4 = new Order();
 		mockOrder4.setQuantity(5);
 		mockOrder4.setPu(34.0);
 		mockOrder4.setClOrdId("987_654");
-		mockOrder4.setTicket("BNDP12");
+		mockOrder4.setTicker("BNDP12");
 		mockOrder4.setOwner("TREZENABANK");
 		mockOrder4.setSide("BUY");
 

@@ -4,7 +4,7 @@ public class Security {
 
 	private long id;
 	
-	private String ticket;
+	private String ticker;
 
 	private String type;
 
@@ -18,12 +18,12 @@ public class Security {
 		this.id = id;
 	}
 
-	public String getTicket() {
-		return ticket;
+	public String getTicker() {
+		return ticker;
 	}
 
-	public void setTicket(String ticket) {
-		this.ticket = ticket;
+	public void setTicker(String ticker) {
+		this.ticker = ticker;
 	}
 
 	public double getRefPrice() {
@@ -42,10 +42,10 @@ public class Security {
 		this.type = type;
 	}
 
-	public Security(long id, String ticket, double refPrice, String type) {
+	public Security(long id, String ticker, double refPrice, String type) {
 		super();
 		this.id = id;
-		this.ticket = ticket;
+		this.ticker = ticker;
 		this.refPrice = refPrice;
 		this.type = type;
 	}

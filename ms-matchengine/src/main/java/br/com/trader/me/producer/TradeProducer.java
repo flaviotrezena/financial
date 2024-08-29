@@ -8,7 +8,7 @@ import br.com.trader.me.engine.model.Trade;
 @Service
 public class TradeProducer {
 
-	 private static final String TOPIC = "TRADE.OUT";
+	 private static final String TOPIC = "trade.out";
 
 	    @Autowired
 	    private KafkaTemplate<String, Trade> kafkaTemplate;

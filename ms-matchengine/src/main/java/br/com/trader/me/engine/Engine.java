@@ -6,15 +6,25 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 
 import br.com.trader.me.engine.model.Order;
 import br.com.trader.me.engine.model.Security;
 import br.com.trader.me.engine.model.Trade;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 
-@Log
+@Slf4j
 public class Engine {
+
+	@Autowired
+	private KafkaTemplate<String, Object> kafkaTemplate;
+
+	static final String TRADE_OUT_TOPIC = "trade.out";
 
 	String type;
 
@@ -47,22 +57,19 @@ public class Engine {
 	}
 
 	public void process(Order order) {
-
 		bookOfOrders.add(order);
 		process(bookOfOrders);
 	}
 
 	private void process(LinkedList<Order> book) {
-		
 		MatchOrdersByPriceAndQuantityWithOpositeSide(book);
-		
 	}
 
 
 	/* return matches that have the same quantity and price, but opposite side */
-	private void MatchOrdersByPriceAndQuantityWithOpositeSide(LinkedList<Order> processBookForTicket) {
-		LinkedList<Order> matchOrders = processBookForTicket.stream()
-        .filter(order -> processBookForTicket.stream()
+	private void MatchOrdersByPriceAndQuantityWithOpositeSide(LinkedList<Order> processBookForTicker) {
+		LinkedList<Order> matchOrders = processBookForTicker.stream()
+        .filter(order -> processBookForTicker.stream()
                                .filter(o -> o.getPrice() == order.getPrice() 
                                				&& o.getQuantity() == order.getQuantity() 
                                				&& (o.getSide() != order.getSide()))
@@ -95,6 +102,8 @@ public class Engine {
 			//storing new Trade
 			bookOfTrades.add(newTrade);
 			
+			sendTrade(newTrade);
+			
 			//remove Orders processed
 			log.info("Removing Buyer order processed ? " + bookOfOrders.remove(buyOrder));
 			log.info("Removing Seller order processed ? " + bookOfOrders.remove(sellOrder));
@@ -111,14 +120,38 @@ public class Engine {
 	            }
 	        }*/
 		}else {
-			log.warning("without matches...");
+			log.warn("without matches...");
 		}
 	}
 
-	private LinkedList<Order> getListOfOrdersByTicket(String ticker) {
+
+	public boolean sendTrade(Trade newTrade) {
+		try {
+			
+            CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(TRADE_OUT_TOPIC, newTrade);
+
+            future.whenComplete((result, ex) -> {
+                if (ex == null) {
+                    log.info("Trade sent to Kafka: "+ newTrade);
+                } else {
+                    log.error("Error sending newOrder to Kafka: " + ex.getMessage());
+                }
+            });
+
+            // Block until the future is completed to ensure the result
+            future.get();
+            return future.isDone() && !future.isCompletedExceptionally();
+        } catch (Exception e) {
+            log.error("Error sending Order to Kafka: {}", e.getMessage());
+            return false;
+        }
+	}
+
+	
+	private LinkedList<Order> getListOfOrdersByTicker(String ticker) {
 		log.info("Getting orders for Ticker " + ticker);
 		
-		LinkedList<Order> result = bookOfOrders.stream().filter(order -> order.getTicket().equals(ticker))
+		LinkedList<Order> result = bookOfOrders.stream().filter(order -> order.getTicker().equals(ticker))
 				.collect(Collectors.toCollection(LinkedList::new));
 		
 		log.info("Got " + result.size() + " orders.");
@@ -131,8 +164,8 @@ public class Engine {
 				.collect(Collectors.toCollection(LinkedList::new));
 	}
 
-	private Security getSecurity(String ticket) {
-		return listOfSecurities.stream().filter(security -> security.getTicket().equals(ticket)).findFirst()
+	private Security getSecurity(String ticker) {
+		return listOfSecurities.stream().filter(security -> security.getTicker().equals(ticker)).findFirst()
 				.orElse(null);
 	}
 

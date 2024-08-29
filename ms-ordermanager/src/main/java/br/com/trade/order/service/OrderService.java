@@ -1,19 +1,18 @@
 package br.com.trade.order.service;
 
 import java.time.LocalTime;
-import java.util.GregorianCalendar;
 import java.util.concurrent.CompletableFuture;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
 import br.com.trade.order.feignclients.CalcFeignClient;
 import br.com.trade.order.model.Order;
+import br.com.trade.order.model.OrderCopy;
 
 @Service
 public class OrderService {
@@ -26,7 +25,7 @@ public class OrderService {
 	@Autowired
 	private KafkaTemplate<String, Object> kafkaTemplate;
 
-	private static final String TOPIC = "ORDER.IN";
+	private static final String TOPIC = "order.in";
 	
 	public Order getOrder(Long orderId) {
 		return new Order("ALGA12", 1.0, 10000, "BUY", "12313213312_13123", LocalTime.now());
@@ -36,14 +35,35 @@ public class OrderService {
 		return calculadoraClient.calculatePu(quantity, price).getBody();
 	}
 	
+	public static OrderCopy copyOrderToOrderCopy(Order order) {
+        if (order == null) {
+            return null;
+        }
+
+        OrderCopy orderCopy = new OrderCopy();
+        
+        orderCopy.setTicker(order.getTicker());
+        orderCopy.setClOrdId(order.getClOrdId());
+        orderCopy.setPrice(order.getPrice());
+        orderCopy.setQuantity(order.getQuantity());
+        orderCopy.setPu(order.getPu());
+        orderCopy.setTransactTime(order.getTransactTime());
+        orderCopy.setSide(order.getSide());
+
+        return orderCopy;
+    }
+	
 	public boolean sendOrder(Order newOrder) {
 		try {
+			
+			OrderCopy copyOrder = copyOrderToOrderCopy(newOrder);
+			
 			newOrder.setTransactTime(LocalTime.now());
-            CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(TOPIC, newOrder);
+            CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(TOPIC, copyOrder);
 
             future.whenComplete((result, ex) -> {
                 if (ex == null) {
-                    logger.info("newOrder sent to Kafka: {}", newOrder);
+                    logger.info("Order sent to Kafka: {}", copyOrder);
                 } else {
                     logger.error("Error sending newOrder to Kafka: {}", ex.getMessage());
                 }
@@ -53,7 +73,7 @@ public class OrderService {
             future.get();
             return future.isDone() && !future.isCompletedExceptionally();
         } catch (Exception e) {
-            logger.error("Error sending user to Kafka: {}", e.getMessage());
+            logger.error("Error sending Order to Kafka: {}", e.getMessage());
             return false;
         }
 	}

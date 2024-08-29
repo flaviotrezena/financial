@@ -1,0 +1,21 @@
+logging:
+  level:
+    root: INFO
+    br.com.trader.securities.config: DEBUG
+    feign: DEBUG
+    feign.client: DEBUG
+
+spring:
+  application:
+    name: ms-securities
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: 8080
+
+anbima:
+  client-id: ${CLIENT_ID:W8qaypEAe1ow}
+  client-secret: ${CLIENT_SECRET:3bLr1y7y3FLg}
+  token-uri: https://api.anbima.com.br/oauth/access-token
+

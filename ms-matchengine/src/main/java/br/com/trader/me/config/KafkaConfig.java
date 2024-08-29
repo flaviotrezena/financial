@@ -10,7 +10,7 @@ public class KafkaConfig {
 
     @Bean
     public NewTopic tradeOutTopic() {
-        return new NewTopic("TRADE.OUT", 1, (short) 1);
+        return new NewTopic("trade.out", 1, (short) 1);
     }
 
 }
